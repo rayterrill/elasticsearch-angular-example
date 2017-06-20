@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Angular Testing</title>
+  <!-- load bootstrap -->
+  <link rel="stylesheet" type="text/css" href="node_modules/bootstrap/dist/css/bootstrap.css">
+</head>
+<!-- angular: load the testApp module -->
+<body ng-app="testApp">
+  <!-- angular: load the testController to the main div -->
+  <div ng-controller="testController" class="container">
+    <h1>Angular/Elasticsearch Demo</h1>
+
+    <!-- angular: if there is an error, display the message -->
+    <div ng-if="error" class="alert alert-danger" role="alert">{{error.message}}</div>
+
+    <!-- angular: if clusterState is available, display it as formatted json -->
+	<div <div ng-if="clusterState">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Search Results</h3>
+			</div>
+			<div class="panel-body">
+				<table class="table">
+					<tr ng-repeat="c in clusterState.hits.hits">
+						<td>{{ c._source.name }}</td>
+						<td>{{ c._source.price }}</td>
+						<td>{{ c._source.description }}</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<!-- Uncomment the below section to return all of the data in json format to help you map it, like above. -->
+		<!--
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Full Data</h3>
+			</div>
+			<div class="panel-body">
+				<pre>{{ clusterState | json }}</pre>
+			</div>
+		</div>
+		-->
+	</div>
+  </div>
+
+  <!-- include npm modules in proper order -->
+  <script src="node_modules/angular/angular.min.js"></script>
+  <script src="node_modules/elasticsearch-browser/elasticsearch.angular.min.js"></script>
+
+  <!-- load our main angular code from the main.js file -->
+  <script src="main.js"></script>
+</body>
+</html>
